@@ -1,0 +1,29 @@
+.loginPageBackground
+ {
+    background-image: url('../pages/background.webp'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    height: 100%;
+    width: 100%;
+    margin: 0; 
+    display: flex;
+    justify-content: center;
+  }
+
+  .signupPageBackground{
+    background-image: url('../pages/background.webp'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    height: 100%;
+    width: 100%;
+    margin: 0; 
+    display: flex;
+    justify-content: center;
+  }
+  
+  html {
+    height: 100%;
+  }
+  
