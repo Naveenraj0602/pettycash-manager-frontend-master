@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons'; 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-
+import { useNavigate } from 'react-router-dom';
+import backendInstance from "../instances/serverConnection";
 
 // Define your validation schema
 const userValidationSchema = yup.object({
@@ -17,6 +18,7 @@ const userValidationSchema = yup.object({
 });
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -31,8 +33,31 @@ const SignUp = () => {
     onSubmit: (values) => {
       console.log(values);
       // Handle your form submission logic here
+      registerNewUser(values);
     },
   });
+
+   //New User Registration/Sign-up function
+   const registerNewUser = (newUser) => {
+    backendInstance
+      .post("/api/auth/signup", newUser)
+      .then((res) => {
+        formik.resetForm();
+        if (res.code >= "ERR_BAD_REQUEST") {
+          throw res;
+        }
+        alert(res.data.message);
+        navigate("/login");
+      })
+      .catch((error) => {
+        alert(
+          JSON.stringify({
+            code: error.code,
+            message: error.response.data.message,
+          })
+        );
+      });
+  };
 
   return (<div className="signupPageBackground">
     <Container component="main" maxWidth="xs" sx={{
